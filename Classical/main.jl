@@ -22,13 +22,11 @@ Tab = collect(1:N)                               # initial state
   E = Energy(Tab,N)
 
 for k=1:Mts
-  println("Mts")
-  println(Tab)
   Tab = OneMCt(Tab,N,E)  
+  E =Energy(Tab,N)
 end
   println("final")
-  E3 =Energy(Tab,N)
-  print(E3)
+  print(E)
   println(Tab)
 
 

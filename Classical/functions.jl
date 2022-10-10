@@ -41,7 +41,10 @@ end
 #  Queen
 #-===============================================
 function OneMove(Tab,N)
-  Taba = Tab
+  Taba=zeros(Int8,N)
+  for k = 1:N
+    Taba[k] = Tab[k]
+  end
   rndQ1 = rand(1:N)
   rndQ2 = rand(1:N)
   while rndQ2 == rndQ1
@@ -62,20 +65,23 @@ end
 #  
 #-===============================================
 function OneMCt(Tab,N,E)
+  Tab1=zeros(Int8,N)
+  for k=1:N
+    Tab1[k] = Tab[k]
+  end
+
   for i=1:N*N
-    Tab2 = OneMove(Tab,N)
+    Tab2 = OneMove(Tab1,N)
     E2 = Energy(Tab2,N)
     rnd = rand()    
 
     if E2 < E
-      Tab = Tab2
+      Tab1 = Tab2
       E = E2
-      print(E)
-      println(Tab)
     end
   end
   
-  return Tab
+  return Tab1
 end
 
 
