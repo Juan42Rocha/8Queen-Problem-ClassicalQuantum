@@ -69,7 +69,10 @@ function OneMCt(Tab,N,E)
     E2 = Energy(Tab2,N)
     rnd = rand()    
 
-    if E2 <= E
+    if E2 < E
+      Tab1 = copy(Tab2)
+      E = E2
+    elseif (E2 == E & (rnd<0.5))
       Tab1 = copy(Tab2)
       E = E2
     end

@@ -40,6 +40,6 @@ end
   #println(Tab)
   arrayE= arrayE/rel
   #print(arrayE)
-  plot(collect(1:Mts*N+1)/N,arrayE, xlabel="MCts",ylabel="Interacciones")
+  plot(collect(1:Mts*N+1)/N,arrayE,label=string(N), xlabel="MCts",ylabel="Interacciones")
 
 end
