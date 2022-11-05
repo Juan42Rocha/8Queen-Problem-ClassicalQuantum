@@ -61,18 +61,20 @@ end
 #  Apply N times ONeMove
 #  
 #-===============================================
-function OneMCt(Tab,N,E)
+function OneMCt(Tab,N,E,T)
   Tab1 = copy(Tab)
 
   for i=1:1
     Tab2 = copy(OneMove(Tab1,N))
     E2 = Energy(Tab2,N)
     rnd = rand()    
-
+    
+    dE = E2 -E
+    prob = 1/(1+exp(dE/T))
     if E2 < E
       Tab1 = copy(Tab2)
       E = E2
-    elseif (E2 == E & (rnd<0.5))
+    elseif ( (rnd<prob))
       Tab1 = copy(Tab2)
       E = E2
     end
