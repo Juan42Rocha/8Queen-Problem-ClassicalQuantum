@@ -169,7 +169,7 @@ function ConstructK(idtoidx,Tabs,idTabs,E,c1,c2)
   row = idtoidx[NidTabs[ndE]]
 
   for k=1:soc
-    Knothing[row[k],row[k]] = 1
+    Knothing[col[k],col[k]] = 1
   end
 
 
@@ -190,7 +190,11 @@ function ConstructK(idtoidx,Tabs,idTabs,E,c1,c2)
        Ksuper[col[k],col[k]] = Ksuper[col[k],col[k]] *Ksuper[row[k],row[k]]/sqrt(0.5)
     end
   end
-
+#  for k=1:soc
+#    tro = Ksuper[col[k],col[k]]
+#    Ksuper[col[k],col[k]] = Ksuper[row[k],row[k]]  
+#    Ksuper[row[k],row[k]] = tro
+#  end
 
   return Kchange,Knothing+Ksuper
 
@@ -206,16 +210,17 @@ end
 function NewRho(Rho,idtoidx,Tabs,idTabs,E,N)
 
   Nrho = copy(Rho)
-  Nrho = Nrho.*0
+  Nrho = Nrho*0
   kc = copy(Nrho)
   kns = copy(Nrho)
-
+  con = 0
   for i=1:N-1
     for j=i+1:N
+      con = con +1
       kc, kns = ConstructK(idtoidx,Tabs,idTabs,E,i,j)
       Nrho = Nrho + kc*Rho*kc' + kns*Rho*kns'
     end
   end
-
-  return Nrho./factorial(N)/2, kc,kns
+  #print("con  ",con,"  N ",N)
+  return Nrho./(N*(N-1)/2), kc,kns
 end

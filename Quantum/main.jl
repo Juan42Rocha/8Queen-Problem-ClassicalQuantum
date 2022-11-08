@@ -35,20 +35,29 @@ function main(N,Mts,Temp)
   rho[1,1] = 1
     
   Eob = zeros(N*Mts+1)
+  ProbEqui = zeros(N*Mts+1)
+  Cohe = zeros(N*Mts+1)
+  idProbequi = findall(E.==0)
   Eob[1] = E[1]
+  ProbEqui[1] = 0
+  Cohe[1] = 0
+
+    println("traza ",tr(rho))
 
   for k=1:N*Mts
-    println(tr(rho))
     rho ,kc, ks= NewRho(rho,idtoidx,Tabs,idTabs,E,N)
+    println("traza ",tr(rho))
     tras = diag(rho)
     Eob[k+1] = E'* tras
+    ProbEqui[k+1] = sum(tras[idProbequi])
+    Cohe[k+1] = sum(rho)-1
   end
 
 
 # -= save data
-io = open("SN"*string(N)*"-T"*string(Temp)*"-Mts"*string(Mts)*".dat","w");
+io = open("2SN"*string(N)*"-T"*string(Temp)*"-Mts"*string(Mts)*".dat","w");
 for i=1:Mts*N+1
-	println(io, Eob[i])
+	println(io, Eob[i],"   ", ProbEqui[i], "   ", Cohe[i]  )
 end
 close(io)
   
