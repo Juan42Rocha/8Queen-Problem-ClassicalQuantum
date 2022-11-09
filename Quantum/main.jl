@@ -31,6 +31,7 @@ function main(N,Mts,Temp)
   szrho = factorial(N) 
   rho = zeros(szrho,szrho)
   ks = zeros(szrho,szrho)
+  kn = zeros(szrho,szrho)
   kc = zeros(szrho,szrho)
   rho[1,1] = 1
     
@@ -45,12 +46,12 @@ function main(N,Mts,Temp)
     println("traza ",tr(rho))
 
   for k=1:N*Mts
-    rho ,kc, ks= NewRho(rho,idtoidx,Tabs,idTabs,E,N)
+    rho ,kc,kn, ks= NewRho(rho,idtoidx,Tabs,idTabs,E,N,Temp)
     println("traza ",tr(rho))
     tras = diag(rho)
     Eob[k+1] = E'* tras
     ProbEqui[k+1] = sum(tras[idProbequi])
-    Cohe[k+1] = sum(rho)-1
+    Cohe[k+1] = sum(-(rho.<0).*rho + (rho.>0).*rho)-1
   end
 
 
@@ -61,7 +62,7 @@ for i=1:Mts*N+1
 end
 close(io)
   
-  return rho,ks,kc
+  return rho,kc,kn,ks
 
 
 end
